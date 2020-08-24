@@ -1,5 +1,5 @@
 {
-  "name": "single-sign-on",
+  "name": "three-scale",
   "version": "0.0.1",
   "description": "@TODO",
   "main": "server.js",
@@ -21,8 +21,8 @@
     "build:bundle-profile": "webpack --config webpack.prod.js --profile --json > stats.json",
     "bundle-profile:analyze": "npm run build:bundle-profile && webpack-bundle-analyzer ./stats.json",
     "clean": "rimraf dist",
-    "nodeshift-deploy": "scripts/nodeshift.sh deploy single-sign-on",
-    "nodeshift-undeploy": "scripts/nodeshift.sh undeploy single-sign-on"
+    "nodeshift-deploy": "scripts/nodeshift.sh deploy three-scale",
+    "nodeshift-undeploy": "scripts/nodeshift.sh undeploy three-scale"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.5",
