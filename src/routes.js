@@ -1,12 +1,20 @@
 import React from "react";
 
-const AboutPage = React.lazy(() => import("./pages/About"));
+const ApiManager = React.lazy(() => import("./pages/ApiManager"));
+const Integration = React.lazy(() => import("./pages/Integration"));
 
 const routes = [
   {
-    path: "/about",
-    text: "About",
-    component: AboutPage,
+    path: "/api-manager",
+    text: "API Manager",
+    component: ApiManager,
+    exact: true
+  },
+  {
+    path: "/integration",
+    text: "Integration",
+    component: Integration,
+    exact: true
   },
 ];
 
