@@ -1,16 +1,9 @@
 import React from "react";
-import { Card, CardTitle, CardBody, CardFooter, Gallery, Title, TitleSizes } from '@patternfly/react-core';
-import { Page, PageSection } from '@patternfly/react-core';
-import TopNav from "sso/TopNav";
-import { Sidebar } from '../components/Sidebar';
+import { Card, CardTitle, CardBody, CardFooter, Gallery, Title, TitleSizes, PageSection } from '@patternfly/react-core';
 
-const style = {
-  height: 400,
-  padding: 12,
-};
 
-const AboutPage = () => (
-  <Page header={<TopNav />} sidebar={<Sidebar />} isManagedSidebar>
+const ApiManagerPage = () => (
+  <PageSection>
     <Title headingLevel="h3" size={TitleSizes['2xl']}>
       Your APIs
     </Title>
@@ -34,7 +27,7 @@ const AboutPage = () => (
         </CardBody>
       </Card>
     </Gallery>
-  </Page>
+  </PageSection>
 );
 
-export default AboutPage;
+export default ApiManagerPage;
