@@ -11,7 +11,7 @@ const AboutPage = () => (
   <div style={style}>
     <h1>About Page</h1>
     <p>
-      <em>a page being provided by App 2</em>
+      <em>a page being provided by 3scale</em>
     </p>
   </div>
 );
