@@ -1,6 +1,6 @@
 import React from "react";
 
-const AboutPage = React.lazy(() => import("./AboutPage"));
+const AboutPage = React.lazy(() => import("./pages/About"));
 
 const routes = [
   {

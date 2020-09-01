@@ -11,7 +11,7 @@ const routes = [...localRoutes, ...remoteRoutes];
 const App = () => (
   <HashRouter>
     <div>
-      <h1>App 2</h1>
+      <h1>This is 3scale</h1>
       <TopNav />
       <React.Suspense fallback={<div>Loading...</div>}>
         <Switch>
