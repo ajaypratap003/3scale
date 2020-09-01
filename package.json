@@ -21,9 +21,9 @@
     "build": "webpack --mode production",
     "clean": "rm -rf dist",
     "develop": "webpack-dev-server",
-    "serve": "serve dist -p 3002",
-    "nodeshift-deploy": "scripts/nodeshift.sh deploy 3scale",
-    "nodeshift-undeploy": "scripts/nodeshift.sh undeploy 3scale",
+    "serve": "serve dist -p 8080",
+    "nodeshift-deploy": "scripts/nodeshift.sh deploy three-scale",
+    "nodeshift-undeploy": "scripts/nodeshift.sh undeploy three-scale",
     "deploy": "node scripts/deploy"
   },
   "dependencies": {
