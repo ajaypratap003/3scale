@@ -1,4 +1,7 @@
 import React from "react";
+import { Page, PageSection } from '@patternfly/react-core';
+import TopNav from "sso/TopNav";
+import { Sidebar } from '../components/Sidebar';
 
 const style = {
   height: 400,
@@ -8,12 +11,15 @@ const style = {
 };
 
 const AboutPage = () => (
-  <div style={style}>
-    <h1>About Page</h1>
-    <p>
-      <em>a page being provided by 3scale</em>
-    </p>
-  </div>
+  <Page header={<TopNav />} sidebar={<Sidebar />} isManagedSidebar>
+    <PageSection>
+      <h1>About Page</h1>
+      <h2>Welcome to the future!</h2>
+      <p>
+        <em>a page being provided by 3scale</em>
+      </p>
+    </PageSection>
+  </Page>
 );
 
 export default AboutPage;
