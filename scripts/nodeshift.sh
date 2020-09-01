@@ -10,6 +10,7 @@ usage() {
 }
 
 APP_NAME=${APP_NAME:-mfe-poc}
+NAMESPACE="mfe-poc"
 
 KSVC_NAME=$2
 if [ -z "${KSVC_NAME}" ]; then
@@ -17,12 +18,6 @@ if [ -z "${KSVC_NAME}" ]; then
   usage
 fi
 
-if [ -z "${NAMESPACE}" ]; then
-  log-err "You must set NAMESPACE in you environment!
-  example:
-          export NAMESPACE=foobar"
-  exit 1
-fi
 
 deploy() {
   log-info "nodeshift --knative=true --namespace.name=${NAMESPACE}"

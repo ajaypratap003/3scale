@@ -7,10 +7,10 @@ const deps = require("./package.json").dependencies;
 module.exports = (env = {}, argv) => {
   const isProd = argv.mode === 'production';
   const publicPath = isProd
-    ? 'http://rhuxd-mfe-3scale.s3-website.us-east-2.amazonaws.com/'
+    ? 'http://three-scale-zfe-poc.apps.ocp4.patternfly.org/'
     : "http://localhost:3002/";
-  const app1Path = isProd
-    ? 'http://rhuxd-mfe-sso.s3-website.us-east-2.amazonaws.com/'
+  const ssoPath = isProd
+    ? 'http://single-sign-on-zfe-poc.apps.ocp4.patternfly.org/'
     : "http://localhost:3001/";
 
   return {
@@ -52,10 +52,10 @@ module.exports = (env = {}, argv) => {
     plugins: [
       new MiniCssExtractPlugin(),
       new ModuleFederationPlugin({
-        name: "app2",
+        name: "threeScale",
         filename: "remoteEntry.js",
         remotes: {
-          app1: `app1@${app1Path}remoteEntry.js`,
+          sso: `sso@${ssoPath}remoteEntry.js`,
         },
         exposes: {
           "./routes": "./src/routes",
