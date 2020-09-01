@@ -1,18 +1,37 @@
 import React from "react";
+import { Card, CardTitle, CardBody, CardFooter, Gallery, Title, TitleSizes } from '@patternfly/react-core';
 
 const style = {
   height: 400,
-  backgroundColor: "#3f51b5",
-  color: "white",
   padding: 12,
 };
 
 const AboutPage = () => (
   <div style={style}>
-    <h1>About Page</h1>
-    <p>
-      <em>a page being provided by App 2</em>
-    </p>
+    <Title headingLevel="h3" size={TitleSizes['2xl']}>
+      Your APIs
+    </Title>
+    <Gallery hasGutter>
+      <Card>
+        <CardTitle>
+          API Product name
+        </CardTitle>
+        <CardBody>
+          API product system name
+          Configure
+        </CardBody>
+      </Card>
+      <Card>
+        <CardTitle>
+          API
+        </CardTitle>
+        <CardBody>
+          API Endpoint
+          Access Token
+        </CardBody>
+      </Card>
+    </Gallery>
+
   </div>
 );
 
