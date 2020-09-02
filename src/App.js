@@ -1,17 +1,16 @@
 import { HashRouter, Route, Switch } from "react-router-dom";
 
-import "@patternfly/react-core/dist/styles/base.css";
 import React from "react";
 import localRoutes from "./routes";
-import remoteRoutes from "sso/routes";
 import { Page, PageSection } from '@patternfly/react-core';
-import { Sidebar } from './components/Sidebar';
+import PageHeader from './components/PageHeader';
+import Sidebar from './components/Sidebar';
 
-const routes = [...localRoutes, ...remoteRoutes];
+const routes = [...localRoutes];
 
 const App = () => (
   <HashRouter>
-    <Page sidebar={<Sidebar routes={routes} />} isManagedSidebar>
+    <Page sidebar={<Sidebar routes={routes} />} header={<PageHeader />} isManagedSidebar>
       <React.Suspense fallback={<PageSection>Loading...</PageSection>}>
         <Switch>
           {routes.map((route) => (

@@ -1,8 +1,11 @@
 import React, {useState} from "react";
 import {
   Alert,
+  AlertActionLink,
   Bullseye,
   Button,
+  Breadcrumb,
+  BreadcrumbItem,
   Card, 
   CardBody,
   Grid,
@@ -23,7 +26,9 @@ import {
   Title, 
   TitleSizes 
 } from '@patternfly/react-core';
-import './Integration.css';
+import './../Integration.css';
+import ClientSelect from 'sso/ClientSelect';
+import { Link } from 'react-router-dom';
 
 const IntegrationPage = () => {
 
@@ -119,9 +124,17 @@ const IntegrationPage = () => {
 
   return (
     <React.Fragment>
-    <PageSection variant={PageSectionVariants.light}>
+      <PageSection variant={PageSectionVariants.light}>
+        <Breadcrumb className="breadcrumb">
+          <BreadcrumbItem to="/">
+            Dashboard
+          </BreadcrumbItem>
+          <BreadcrumbItem isActive>
+            PetStore API
+          </BreadcrumbItem>
+        </Breadcrumb>
       <Title headingLevel="h1" size={TitleSizes['2xl']}>
-        Authentication
+        PetStore API: Authentication
       </Title>
       <div>
         Restrict access to your API by defining an authentication method.
@@ -129,7 +142,9 @@ const IntegrationPage = () => {
     </PageSection>
     <Divider/>
     <PageSection variant={PageSectionVariants.light}>
-
+      <Title headingLevel="h2" size={TitleSizes['md']} className="subtitle-1">
+        Select an authentication method.
+      </Title>
       <Radio
         isChecked={check3}
         onChange={handleChange3}
@@ -153,8 +168,9 @@ const IntegrationPage = () => {
         id="radio-uncontrolled-2"
         name="radio-2"
         description="The application is identified via the App_ID and authenticated via the App_Key."
-        />
-        
+      />
+      <Grid>
+        <GridItem span={8}>
         <Title headingLevel="h2" size={TitleSizes['md']} className="subtitle">
           Authentication settings
         </Title>
@@ -165,6 +181,7 @@ const IntegrationPage = () => {
           selections={select1}
           onToggle={onToggle1} 
           isOpen={isOpen1}
+          className="select-width"
         >
         {options1.map((option, index) => (
           <SelectOption
@@ -175,110 +192,53 @@ const IntegrationPage = () => {
           />
         ))}
       </Select>
-      
-      {/* { select1 === 'Red Hat Single Sign-On' && ssoConnect &&
-      <React.Fragment>
-        <Bullseye>
-          <Spinner/>
-        </Bullseye>
-        <Bullseye>
-          <Title headingLevel="h3" size={TitleSizes['sm']}>
-            Connecting to your RHSSO account
-          </Title>
-        </Bullseye>
-        </React.Fragment>
-        }
-      { !ssoConnect &&
+      </GridItem>
+    </Grid>
+      { select1 === 'Red Hat Single Sign-On' &&
         <React.Fragment>
-            <Title headingLevel="h2" size={TitleSizes['md']}>
-              Select a Realm account from your RHSSO:
-            </Title>
-            <Select
-              variant={SelectVariant.single}
-              onSelect={onSelect2}
-              selections={select2}
-              onToggle={onToggle2} 
-              isOpen={isOpen2}
-            >
-              {options2.map((option, index) => (
-                <SelectOption
-                  isDisabled={option.disabled}
-                  key={index}
-                  value={option.value}
-                  isPlaceholder={option.isPlaceholder}
-                />
-              ))}
-            </Select>
-          </React.Fragment>
-          }
-          { select2 === 'Singlespa' &&
-            <React.Fragment>
-              <Title headingLevel="h2" size={TitleSizes['md']}>
-                Select a Client from the Realm account selected above:
-              </Title>
-              <Select
-                variant={SelectVariant.single}
-                onSelect={onSelect3}
-                selections={select3}
-                onToggle={onToggle3} 
-                isOpen={isOpen3}
-              >
-                {options3.map((option, index) => (
-                  <SelectOption
-                    isDisabled={option.disabled}
-                    key={index}
-                    value={option.value}
-                    isPlaceholder={option.isPlaceholder}
-                  />
-                ))}
-              </Select>
-            </React.Fragment>
-          }
-          { select3 === '3scale-admin' &&
-              <Grid hasGutter>
-                <GridItem span={6}>
-                    ClientID
-                  <TextInput id="text-1" isDisabled type="text" value="3scale-admin" />
-                </GridItem>
-              <GridItem span={6}>
-                Client Secret
-                <TextInput id="text-2" isDisabled type="text" value="6ab18253-be8b-42f8-a12a-d4a5758be11a" />
-              </GridItem>
-            </Grid>
-          } */}
-      <Card>
-        <CardBody>
-          <Title headingLevel="h2" size={TitleSizes['md']}>
-            OpenID Connect Issuer
-          </Title>
-          { select3 === '3scale-admin' &&
-            <Alert variant="info" isInline title="Click on Complete endpoint to use your OpenID credentials." />
-          }
-          <Grid hasGutter>
-            <GridItem span={10}>
-              <TextInput 
-                id="text-3"
-                type="text"
-                value={valueOpenIDConnectIssuer}
-                placeholder="https://<CLIENT_ID>:<CLIENT_SECRET>@<HOST>:<PORT>/auth/realms/<REALM_NAME>"
-              />
-            </GridItem>
-            <GridItem span={2}>
-              <Button variant="primary" onClick={() => setValueOpenIDConnectIssuer('https://3scale-admin:6ab18253-be8b-42f8-a12a-d4a5758be11a@localhost:8080/auth/realms/singlespa')}>
-                Complete Endpoint
-              </Button>
-            </GridItem>
-          </Grid>
-          <TextContent>
-            <Text component={TextVariants.small}>
-              Location of your OpenID Provider. The format of this endpoint is determined on your OpenID Provider setup.
-            </Text>
-          </TextContent>
-        </CardBody>
-      </Card>
-      <Button variant="primary">
-        Update API
-      </Button>
+          <ClientSelect />
+          <Alert
+            variant="info"
+            isInline
+            title="Use the information generated above"
+            className="alert"
+            actionLinks={
+              <AlertActionLink
+                onClick={() => setValueOpenIDConnectIssuer('https://3scale-admin:6ab18253-be8b-42f8-a12a-d4a5758be11a@localhost:8080/auth/realms/singlespa')}
+              >Complete OpenID Connect Issuer</AlertActionLink>}
+          >
+            <p>
+              Using the information generated from RHSSO above fill in the OpenID Connect Issuer.
+            </p>
+          </Alert>
+        </React.Fragment>
+      }
+      <p className="form-title">OpenID Connect Issuer</p>
+      <Grid hasGutter>
+        <GridItem span={10}>
+          <TextInput 
+            id="text-3"
+            type="text"
+            value={valueOpenIDConnectIssuer}
+            placeholder="https://<CLIENT_ID>:<CLIENT_SECRET>@<HOST>:<PORT>/auth/realms/<REALM_NAME>"
+          />
+        </GridItem>
+      </Grid>
+      <TextContent>
+        <Text component={TextVariants.small}>
+          Location of your OpenID Provider. The format of this endpoint is determined on your OpenID Provider setup.
+        </Text>
+      </TextContent>
+        <div className="button-group">
+          <Link to="/">
+            <Button variant="primary">
+              Save
+            </Button>
+          </Link>
+          <Button variant="link">
+            Cancel
+          </Button>
+        </div>
     </PageSection>
     </React.Fragment>
   )

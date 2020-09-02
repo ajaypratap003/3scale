@@ -4,13 +4,20 @@ DIR=$(dirname "$0")
 source ${DIR}/common/logger.sh
 source ${DIR}/common/util.sh
 
+NODESHIFT_CMD=`pwd`/node_modules/.bin/nodeshift
+
 usage() {
   log-info "Usage: $(basename $0) [deploy|undeploy] <app_name>"
   exit 1
 }
 
 APP_NAME=${APP_NAME:-mfe-poc}
-NAMESPACE="mfe-poc"
+
+NAMESPACE=${NAMESPACE}
+if [ -z "${NAMESPACE}" ]; then
+  log-err "You have to set NAMESPACE environment variable"
+  exit 1
+fi
 
 KSVC_NAME=$2
 if [ -z "${KSVC_NAME}" ]; then
@@ -18,10 +25,9 @@ if [ -z "${KSVC_NAME}" ]; then
   usage
 fi
 
-
 deploy() {
   log-info "nodeshift --knative=true --namespace.name=${NAMESPACE}"
-  nodeshift --knative=true --namespace.name=${NAMESPACE}
+  ${NODESHIFT_CMD} --knative=true --namespace.name=${NAMESPACE}
   dd-oc label ksvc/${KSVC_NAME} app.kubernetes.io/part-of=${APP_NAME} --overwrite=true
 }
 

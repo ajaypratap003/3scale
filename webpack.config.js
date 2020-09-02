@@ -4,13 +4,18 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require("path");
 const deps = require("./package.json").dependencies;
 
+// Don't include PatternFly styles twice
+const reactCSSRegex = /(react-[\w-]+\/dist|react-styles\/css)\/.*\.css$/;
+
+const NameSpace = 'mfe-poc'
+
 module.exports = (env = {}, argv) => {
   const isProd = argv.mode === 'production';
   const publicPath = isProd
-    ? 'http://three-scale-zfe-poc.apps.ocp4.patternfly.org/'
+    ? ''.concat('http://three-scale-', NameSpace, '.apps.ocp4.patternfly.org/')
     : "http://localhost:3002/";
   const ssoPath = isProd
-    ? 'http://single-sign-on-zfe-poc.apps.ocp4.patternfly.org/'
+    ? ''.concat('http://single-sign-on-', NameSpace, '.apps.ocp4.patternfly.org/')
     : "http://localhost:3001/";
 
   return {
@@ -39,6 +44,7 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /\.css$/,
+          exclude: reactCSSRegex,
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
@@ -47,6 +53,10 @@ module.exports = (env = {}, argv) => {
             "css-loader",
           ],
         },
+        {
+          test: reactCSSRegex,
+          use: 'null-loader'
+        }
       ],
     },
     plugins: [
@@ -59,6 +69,7 @@ module.exports = (env = {}, argv) => {
         },
         exposes: {
           "./routes": "./src/routes",
+          "./PageHeader": "./src/components/PageHeader"
         },
         shared: {
           ...deps,
