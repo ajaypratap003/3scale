@@ -27,10 +27,11 @@ import {
   TitleSizes 
 } from '@patternfly/react-core';
 import './../Integration.css';
-import ClientSelect from 'sso/ClientSelect';
 import { Link } from 'react-router-dom';
 
-const IntegrationPage = () => {
+export const IntegrationPage = () => {
+
+  const ClientSelect = React.lazy(() => import('sso/ClientSelect'));
 
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
@@ -243,5 +244,3 @@ const IntegrationPage = () => {
     </React.Fragment>
   )
 };
-
-export default IntegrationPage;

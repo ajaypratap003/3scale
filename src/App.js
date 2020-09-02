@@ -1,30 +1,31 @@
 import { HashRouter, Route, Switch } from "react-router-dom";
 
 import React from "react";
-import localRoutes from "./routes";
-import { Page, PageSection } from '@patternfly/react-core';
-import PageHeader from './components/PageHeader';
-import Sidebar from './components/Sidebar';
+import Page from 'navigation/Page';
+import routes from "navigation/routes";
+import SidebarContext from 'navigation/sidebarContext';
 
-const routes = [...localRoutes];
-
-const App = () => (
-  <HashRouter>
-    <Page sidebar={<Sidebar routes={routes} />} header={<PageHeader />} isManagedSidebar>
-      <React.Suspense fallback={<PageSection>Loading...</PageSection>}>
-        <Switch>
-          {routes.map((route) => (
-            <Route
-              key={route.path}
-              path={route.path}
-              component={route.component}
-              exact={route.exact}
-            />
-          ))}
-        </Switch>
-      </React.Suspense>
-    </Page>
-  </HashRouter>
-);
+const App = () => {
+  const [apiName, setApiName] = React.useState(null);
+  
+  return (
+    <HashRouter>
+      <SidebarContext.Provider value={{ apiName, setApiName }}>
+        <Page>
+          <Switch>
+            {routes.map(({ path, component: Component, exact }) => (
+              <Route
+                key={path}
+                path={path}
+                component={() => <Component apiName={apiName} setApiName={setApiName} />}
+                exact={exact}
+              />
+            ))}
+          </Switch>
+        </Page>
+      </SidebarContext.Provider>
+    </HashRouter>
+  );
+}
 
 export default App;

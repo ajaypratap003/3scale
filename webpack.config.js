@@ -2,28 +2,31 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack").container.ModuleFederationPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require("path");
-const deps = require("./package.json").dependencies;
+const { dependencies, port, name } = require("./package.json");
+delete dependencies.serve; // Needed for nodeshift bug
 
 // Don't include PatternFly styles twice
 const reactCSSRegex = /(react-[\w-]+\/dist|react-styles\/css)\/.*\.css$/;
 
-const NameSpace = 'mfe-poc'
-
-module.exports = (env = {}, argv) => {
+module.exports = (env = { ssoPort: 3001, navPort: 3003 }, argv) => {
   const isProd = argv.mode === 'production';
-  const publicPath = isProd
-    ? ''.concat('http://three-scale-', NameSpace, '.apps.ocp4.patternfly.org/')
-    : "http://localhost:3002/";
-  const ssoPath = isProd
-    ? ''.concat('http://single-sign-on-', NameSpace, '.apps.ocp4.patternfly.org/')
-    : "http://localhost:3001/";
+  const { remoteSuffix } = env;
+  const publicPath = (isProd && remoteSuffix)
+    ? `http://threescale${remoteSuffix}/`
+    : `http://localhost:${port}/`;
+  const ssoPath = (isProd && remoteSuffix)
+    ? `http://sso${remoteSuffix}/`
+    : `http://localhost:${env.ssoPort}/`;
+  const navigationPath = (isProd && remoteSuffix)
+    ? `http://navigation${remoteSuffix}/`
+    : `http://localhost:${env.navPort}/`;
 
   return {
     entry: "./src/index",
     mode: "development",
     devServer: {
       contentBase: path.join(__dirname, "dist"),
-      port: 3002,
+      port
     },
     output: {
       publicPath
@@ -62,26 +65,26 @@ module.exports = (env = {}, argv) => {
     plugins: [
       new MiniCssExtractPlugin(),
       new ModuleFederationPlugin({
-        name: "threeScale",
+        name,
         filename: "remoteEntry.js",
         remotes: {
           sso: `sso@${ssoPath}remoteEntry.js`,
+          navigation: `navigation@${navigationPath}remoteEntry.js`,
         },
         exposes: {
-          "./routes": "./src/routes",
-          "./PageHeader": "./src/components/PageHeader"
+          "./pages": "./src/pages",
         },
         shared: {
-          ...deps,
+          ...dependencies,
           react: {
             eager: true,
             singleton: true,
-            requiredVersion: deps.react,
+            requiredVersion: dependencies.react,
           },
           "react-dom": {
             eager: true,
             singleton: true,
-            requiredVersion: deps["react-dom"],
+            requiredVersion: dependencies["react-dom"],
           },
         },
       }),
