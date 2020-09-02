@@ -10,8 +10,10 @@ import {
   Select,
   SelectOption,
   SelectVariant,
+  Divider,
   DropdownItem,
   PageSection, 
+  PageSectionVariants,
   Radio,
   Spinner,
   TextInput,
@@ -21,6 +23,7 @@ import {
   Title, 
   TitleSizes 
 } from '@patternfly/react-core';
+import './Integration.css';
 
 const IntegrationPage = () => {
 
@@ -115,83 +118,78 @@ const IntegrationPage = () => {
   };
 
   return (
-    <PageSection>
+    <React.Fragment>
+    <PageSection variant={PageSectionVariants.light}>
       <Title headingLevel="h1" size={TitleSizes['2xl']}>
         Authentication
       </Title>
-      <Card>
-        <CardBody>
-      <Title headingLevel="h2" size={TitleSizes['md']}>
-        Select an Authentication method:
-      </Title>
-        <Radio
-          isChecked={check1}
-          onChange={handleChange1}
-          label="API Key (user_key)"
-          id="radio-uncontrolled-1"
-          name="radio-1"
-          description="The application is identified & authenticated via a single string."
+      <div>
+        Restrict access to your API by defining an authentication method.
+      </div>
+    </PageSection>
+    <Divider/>
+    <PageSection variant={PageSectionVariants.light}>
+
+      <Radio
+        isChecked={check3}
+        onChange={handleChange3}
+        label="OpenID Connect"
+        id="radio-uncontrolled-3"
+        name="radio-3"
+        description="Use OpenID Connect for any OAuth 2.0 flow."
+      />
+      <Radio
+        isChecked={check1}
+        onChange={handleChange1}
+        label="API Key (user_key)"
+        id="radio-uncontrolled-1"
+        name="radio-1"
+        description="The application is identified & authenticated via a single string."
+      />
+      <Radio
+        isChecked={check2}
+        onChange={handleChange2}
+        label="App_ID and App_Key Pair"
+        id="radio-uncontrolled-2"
+        name="radio-2"
+        description="The application is identified via the App_ID and authenticated via the App_Key."
         />
-        <Radio
-          isChecked={check2}
-          onChange={handleChange2}
-          label="App_ID and App_Key Pair"
-          id="radio-uncontrolled-2"
-          name="radio-2"
-          description="The application is identified via the App_ID and authenticated via the App_Key."
+        
+        <Title headingLevel="h2" size={TitleSizes['md']} className="subtitle">
+          Authentication settings
+        </Title>
+        <p className="form-title">OpenID Connect Issuer Type</p>
+        <Select
+          variant={SelectVariant.single}
+          onSelect={onSelect1}
+          selections={select1}
+          onToggle={onToggle1} 
+          isOpen={isOpen1}
+        >
+        {options1.map((option, index) => (
+          <SelectOption
+            isDisabled={option.disabled}
+            key={index}
+            value={option.value}
+            isPlaceholder={option.isPlaceholder}
           />
-        <Radio
-          isChecked={check3}
-          onChange={handleChange3}
-          label="OpenID Connect"
-          id="radio-uncontrolled-3"
-          name="radio-3"
-          description="Use OpenID Connect for any OAuth 2.0 flow."
-        />
-        </CardBody>
-      </Card>
-      <Card>
-        <CardBody>
-          <Title headingLevel="h2" size={TitleSizes['md']}>
-            OpenID Connect Basics
+        ))}
+      </Select>
+      
+      {/* { select1 === 'Red Hat Single Sign-On' && ssoConnect &&
+      <React.Fragment>
+        <Bullseye>
+          <Spinner/>
+        </Bullseye>
+        <Bullseye>
+          <Title headingLevel="h3" size={TitleSizes['sm']}>
+            Connecting to your RHSSO account
           </Title>
-          <Select
-            variant={SelectVariant.single}
-            onSelect={onSelect1}
-            selections={select1}
-            onToggle={onToggle1} 
-            isOpen={isOpen1}
-          >
-            {options1.map((option, index) => (
-              <SelectOption
-                isDisabled={option.disabled}
-                key={index}
-                value={option.value}
-                isPlaceholder={option.isPlaceholder}
-              />
-            ))}
-          </Select>
-        </CardBody>
-      </Card>
-      <Card>
-      { select1 === 'Red Hat Single Sign-On' && ssoConnect &&
-        <CardBody>
-          <React.Fragment>
-            <Bullseye>
-              <Spinner/>
-            </Bullseye>
-            <Bullseye>
-              <Title headingLevel="h3" size={TitleSizes['sm']}>
-                Connecting to your RHSSO account
-              </Title>
-            </Bullseye>
-            </React.Fragment>
-        </CardBody>
+        </Bullseye>
+        </React.Fragment>
         }
-      </Card>
       { !ssoConnect &&
-        <Card style={{ backgroundColor: "#E4EFFF"}}>
-          <CardBody>
+        <React.Fragment>
             <Title headingLevel="h2" size={TitleSizes['md']}>
               Select a Realm account from your RHSSO:
             </Title>
@@ -211,9 +209,10 @@ const IntegrationPage = () => {
                 />
               ))}
             </Select>
-          </CardBody>
+          </React.Fragment>
+          }
           { select2 === 'Singlespa' &&
-            <CardBody>
+            <React.Fragment>
               <Title headingLevel="h2" size={TitleSizes['md']}>
                 Select a Client from the Realm account selected above:
               </Title>
@@ -233,10 +232,9 @@ const IntegrationPage = () => {
                   />
                 ))}
               </Select>
-            </CardBody>
+            </React.Fragment>
           }
           { select3 === '3scale-admin' &&
-            <CardBody>
               <Grid hasGutter>
                 <GridItem span={6}>
                     ClientID
@@ -246,11 +244,8 @@ const IntegrationPage = () => {
                 Client Secret
                 <TextInput id="text-2" isDisabled type="text" value="6ab18253-be8b-42f8-a12a-d4a5758be11a" />
               </GridItem>
-              </Grid>
-            </CardBody>
-          }
-        </Card>
-      }
+            </Grid>
+          } */}
       <Card>
         <CardBody>
           <Title headingLevel="h2" size={TitleSizes['md']}>
@@ -285,6 +280,7 @@ const IntegrationPage = () => {
         Update API
       </Button>
     </PageSection>
+    </React.Fragment>
   )
 };
 
