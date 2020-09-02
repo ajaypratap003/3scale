@@ -21,7 +21,7 @@ import {
   Title, 
   TitleSizes 
 } from '@patternfly/react-core';
-import ClientSelect from 'sso/ClientSelect';
+const ClientSelect = React.lazy(() => import('sso/ClientSelect'));
 
 const IntegrationPage = () => {
 

@@ -76,7 +76,7 @@ const routes = [
   {
     path: "/consume/consume",
     section: 'consume',
-    text: "Comsume",
+    text: "Consume",
     component: () => 'Nothing yet',
     exact: true
   },
