@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, CardTitle, CardBody, Gallery, Title, TitleSizes, PageSection } from '@patternfly/react-core';
 
-
-export const ApiManagerPage = () => (
+export const ApiManagerPage = ({ setApiName }) => (
   <PageSection>
+    <button onClick={() => setApiName('PetStore API')}>set to petstore api</button>
     <Title headingLevel="h3" size={TitleSizes['2xl']}>
       Your APIs
     </Title>
