@@ -1,8 +1,8 @@
 import React from "react";
-import { Card, CardTitle, CardBody, CardFooter, Gallery, Title, TitleSizes, PageSection } from '@patternfly/react-core';
+import { Card, CardTitle, CardBody, Gallery, Title, TitleSizes, PageSection } from '@patternfly/react-core';
 
 
-const ApiManagerPage = () => (
+export const ApiManagerPage = () => (
   <PageSection>
     <Title headingLevel="h3" size={TitleSizes['2xl']}>
       Your APIs
@@ -29,5 +29,3 @@ const ApiManagerPage = () => (
     </Gallery>
   </PageSection>
 );
-
-export default ApiManagerPage;

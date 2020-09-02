@@ -2,21 +2,24 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack").container.ModuleFederationPlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require("path");
-const { dependencies, port } = require("./package.json");
+const { dependencies, port, name } = require("./package.json");
 delete dependencies.serve; // Needed for nodeshift bug
 
 // Don't include PatternFly styles twice
 const reactCSSRegex = /(react-[\w-]+\/dist|react-styles\/css)\/.*\.css$/;
 
-module.exports = (env = { ssoPort: 3001 }, argv) => {
+module.exports = (env = { ssoPort: 3001, navPort: 3003 }, argv) => {
   const isProd = argv.mode === 'production';
   const { remoteSuffix } = env;
   const publicPath = (isProd && remoteSuffix)
-    ? `http://three-scale-${remoteSuffix}/`
+    ? `http://threeScale-${remoteSuffix}/`
     : `http://localhost:${port}/`;
   const ssoPath = (isProd && remoteSuffix)
-    ? `http://single-sign-on-${remoteSuffix}/`
+    ? `http://sso-${remoteSuffix}/`
     : `http://localhost:${env.ssoPort}/`;
+  const navigationPath = (isProd && remoteSuffix)
+    ? `http://navigation-${remoteSuffix}/`
+    : `http://localhost:${env.navPort}/`;
 
   return {
     entry: "./src/index",
@@ -62,14 +65,14 @@ module.exports = (env = { ssoPort: 3001 }, argv) => {
     plugins: [
       new MiniCssExtractPlugin(),
       new ModuleFederationPlugin({
-        name: "threeScale",
+        name,
         filename: "remoteEntry.js",
         remotes: {
           sso: `sso@${ssoPath}remoteEntry.js`,
+          navigation: `navigation@${navigationPath}remoteEntry.js`,
         },
         exposes: {
-          "./routes": "./src/routes",
-          "./Page": "./src/components/Page",
+          "./pages": "./src/pages",
         },
         shared: {
           ...dependencies,

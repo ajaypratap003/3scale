@@ -23,8 +23,7 @@ import {
 } from '@patternfly/react-core';
 const ClientSelect = React.lazy(() => import('sso/ClientSelect'));
 
-const IntegrationPage = () => {
-
+export const SecurePage = () => {
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
   const [check3, setCheck3] = useState(true);
@@ -289,5 +288,3 @@ const IntegrationPage = () => {
     </PageSection>
   )
 };
-
-export default IntegrationPage;

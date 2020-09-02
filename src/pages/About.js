@@ -4,12 +4,7 @@ import { Page, PageSection } from '@patternfly/react-core';
 import TopNav from "sso/TopNav";
 import { Sidebar } from '../components/Sidebar';
 
-const style = {
-  height: 400,
-  padding: 12,
-};
-
-const AboutPage = () => (
+export const AboutPage = () => (
   <Page header={<TopNav />} sidebar={<Sidebar />} isManagedSidebar>
     <Title headingLevel="h3" size={TitleSizes['2xl']}>
       Your APIs
@@ -36,5 +31,3 @@ const AboutPage = () => (
     </Gallery>
   </Page>
 );
-
-export default AboutPage;
