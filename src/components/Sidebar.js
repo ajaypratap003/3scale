@@ -23,7 +23,6 @@ const Sidebar = ({ routes }) => {
 
       return acc;
     }, {});
-  console.log('sectionedRoutes', sectionedRoutes)
   return <PageSidebar nav={
     <Nav>
       <NavList>

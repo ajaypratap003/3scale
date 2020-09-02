@@ -69,7 +69,8 @@ module.exports = (env = {}, argv) => {
         },
         exposes: {
           "./routes": "./src/routes",
-          "./PageHeader": "./src/components/PageHeader"
+          "./PageHeader": "./src/components/PageHeader",
+          "./Sidebar": "./src/components/Sidebar",
         },
         shared: {
           ...deps,
