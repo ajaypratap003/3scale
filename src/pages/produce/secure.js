@@ -21,6 +21,7 @@ import {
   Title, 
   TitleSizes 
 } from '@patternfly/react-core';
+import ClientSelect from 'sso/ClientSelect';
 
 const IntegrationPage = () => {
 
@@ -116,6 +117,7 @@ const IntegrationPage = () => {
 
   return (
     <PageSection>
+      <ClientSelect />
       <Title headingLevel="h1" size={TitleSizes['2xl']}>
         Authentication
       </Title>

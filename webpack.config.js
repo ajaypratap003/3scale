@@ -4,6 +4,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require("path");
 const deps = require("./package.json").dependencies;
 
+// Don't include PatternFly styles twice
+const reactCSSRegex = /(react-[\w-]+\/dist|react-styles\/css)\/.*\.css$/;
+
 const NameSpace = 'mfe-poc'
 
 module.exports = (env = {}, argv) => {
@@ -41,6 +44,7 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /\.css$/,
+          exclude: reactCSSRegex,
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
@@ -49,6 +53,10 @@ module.exports = (env = {}, argv) => {
             "css-loader",
           ],
         },
+        {
+          test: reactCSSRegex,
+          use: 'null-loader'
+        }
       ],
     },
     plugins: [
@@ -61,6 +69,7 @@ module.exports = (env = {}, argv) => {
         },
         exposes: {
           "./routes": "./src/routes",
+          "./PageHeader": "./src/components/PageHeader"
         },
         shared: {
           ...deps,
