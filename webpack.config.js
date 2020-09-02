@@ -12,13 +12,13 @@ module.exports = (env = { ssoPort: 3001, navPort: 3003 }, argv) => {
   const isProd = argv.mode === 'production';
   const { remoteSuffix } = env;
   const publicPath = (isProd && remoteSuffix)
-    ? `http://threeScale-${remoteSuffix}/`
+    ? `http://threescale${remoteSuffix}/`
     : `http://localhost:${port}/`;
   const ssoPath = (isProd && remoteSuffix)
-    ? `http://sso-${remoteSuffix}/`
+    ? `http://sso${remoteSuffix}/`
     : `http://localhost:${env.ssoPort}/`;
   const navigationPath = (isProd && remoteSuffix)
-    ? `http://navigation-${remoteSuffix}/`
+    ? `http://navigation${remoteSuffix}/`
     : `http://localhost:${env.navPort}/`;
 
   return {
