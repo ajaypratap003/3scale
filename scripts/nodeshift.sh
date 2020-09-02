@@ -4,6 +4,8 @@ DIR=$(dirname "$0")
 source ${DIR}/common/logger.sh
 source ${DIR}/common/util.sh
 
+NODESHIFT_CMD=`pwd`/node_modules/.bin/nodeshift
+
 usage() {
   log-info "Usage: $(basename $0) [deploy|undeploy] <app_name>"
   exit 1
@@ -25,7 +27,7 @@ fi
 
 deploy() {
   log-info "nodeshift --knative=true --namespace.name=${NAMESPACE}"
-  nodeshift --knative=true --namespace.name=${NAMESPACE}
+  ${NODESHIFT_CMD} --knative=true --namespace.name=${NAMESPACE}
   dd-oc label ksvc/${KSVC_NAME} app.kubernetes.io/part-of=${APP_NAME} --overwrite=true
 }
 
