@@ -49,7 +49,7 @@ import LockIcon from '@patternfly/react-icons/dist/js/icons/lock-icon';
 import ExternalLinkSquareAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-square-alt-icon';
 import { Link } from 'react-router-dom';
 
-const ApiManagerPage = ({ setApiName }) => {
+export const ApiManagerPage = ({ setApiName }) => {
 
   const [isExpanded1, setIsExpanded1] = useState(false);
   const [isExpanded2, setIsExpanded2] = useState(false);
@@ -217,5 +217,3 @@ const ApiManagerPage = ({ setApiName }) => {
   </React.Fragment>
   );
 };
-
-export default ApiManagerPage;

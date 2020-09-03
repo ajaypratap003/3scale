@@ -8,6 +8,8 @@ import SidebarContext from 'navigation/sidebarContext';
 const App = () => {
   const [apiName, setApiName] = React.useState(null);
   
+  console.log('routes', routes);
+
   return (
     <HashRouter>
       <SidebarContext.Provider value={{ apiName, setApiName }}>
