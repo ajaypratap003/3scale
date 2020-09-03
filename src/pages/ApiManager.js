@@ -49,11 +49,10 @@ import LockIcon from '@patternfly/react-icons/dist/js/icons/lock-icon';
 import ExternalLinkSquareAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-square-alt-icon';
 import { Link } from 'react-router-dom';
 
-export const ApiManagerPage = ({ setApiName }) => {
+export const ApiManagerPage = ({ setApiName, authenticated }) => {
 
   const [isExpanded1, setIsExpanded1] = useState(false);
   const [isExpanded2, setIsExpanded2] = useState(false);
-
 
   return (
   <React.Fragment>
@@ -94,11 +93,18 @@ export const ApiManagerPage = ({ setApiName }) => {
                 <DataListCell key="primary content">
                   <div id="ex-item1"><b>Pet Store API</b></div>
                   <div>This is the API for an e-commerce pet store solution.</div>
+                  
+                  { authenticated  ? (
+                    <Label variant="outline" color="orange" icon={<LockIcon />}>
+                      Authenticated
+                    </Label>
+                  ) : (
                   <Link to="/produce/secure">
-                  <Button isInline variant="link" icon={<ArrowRightIcon />} iconPosition="right" onClick={() => setApiName('PetStore API')}>
-                    Authenticate API
-                  </Button>
+                    <Button isInline variant="link" icon={<ArrowRightIcon />} iconPosition="right" onClick={() => setApiName('PetStore API')}>
+                      Authenticate API
+                    </Button>
                   </Link>
+                  )}
                 </DataListCell>
               ]}
             />
