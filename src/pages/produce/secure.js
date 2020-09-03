@@ -29,7 +29,7 @@ import {
 import './../Integration.css';
 import { Link } from 'react-router-dom';
 
-export const IntegrationPage = () => {
+export const SecurePage = () => {
 
   const ClientSelect = React.lazy(() => import('sso/ClientSelect'));
 
