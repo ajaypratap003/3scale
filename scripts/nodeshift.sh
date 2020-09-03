@@ -11,7 +11,7 @@ usage() {
   exit 1
 }
 
-APP_NAME=${APP_NAME:-mfe-poc}
+APP_NAME=${APP_NAME:-3scale}
 
 NAMESPACE=${NAMESPACE}
 if [ -z "${NAMESPACE}" ]; then
@@ -30,6 +30,7 @@ deploy() {
   ${NODESHIFT_CMD} --knative=true --namespace.name=${NAMESPACE}
   dd-oc label ksvc/${KSVC_NAME} app.kubernetes.io/part-of=${APP_NAME} --overwrite=true
   dd-oc annotate --overwrite ksvc/${KSVC_NAME} app.openshift.io/connects-to=threescale-api
+  dd-oc annotate --overwrite ksvc/${KSVC_NAME} autoscaling.knative.dev/minScale=1
 
   local _latest_rev=$(oc --namespace ${NAMESPACE} get ksvc/${KSVC_NAME} -o=jsonpath='{.status.latestCreatedRevisionName}')
   dd-oc label rev/${_latest_rev} app.openshift.io/runtime=nodejs --overwrite=true
