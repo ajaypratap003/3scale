@@ -29,7 +29,7 @@ import {
 import './../Integration.css';
 import { Link } from 'react-router-dom';
 
-export const SecurePage = () => {
+export const SecurePage = ({ setIsAuthenticated }) => {
 
   const ClientSelect = React.lazy(() => import('sso/ClientSelect'));
 
@@ -232,7 +232,7 @@ export const SecurePage = () => {
       </TextContent>
         <div className="button-group">
           <Link to="/">
-            <Button variant="primary">
+            <Button variant="primary" onClick={() => setIsAuthenticated(true)}>
               Save
             </Button>
           </Link>
