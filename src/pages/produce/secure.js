@@ -29,7 +29,7 @@ import {
 import './../Integration.css';
 import { Link } from 'react-router-dom';
 
-export const SecurePage = () => {
+export const SecurePage = ({ setIsAuthenticated }) => {
 
   const ClientSelect = React.lazy(() => import('sso/ClientSelect'));
 
@@ -196,23 +196,19 @@ export const SecurePage = () => {
       </GridItem>
     </Grid>
       { select1 === 'Red Hat Single Sign-On' &&
-        <React.Fragment>
           <ClientSelect />
-          <Alert
-            variant="info"
-            isInline
-            title="Use the information generated above"
-            className="alert"
-            actionLinks={
-              <AlertActionLink
-                onClick={() => setValueOpenIDConnectIssuer('https://3scale-admin:6ab18253-be8b-42f8-a12a-d4a5758be11a@localhost:8080/auth/realms/singlespa')}
-              >Complete OpenID Connect Issuer</AlertActionLink>}
-          >
-            <p>
-              Using the information generated from RHSSO above fill in the OpenID Connect Issuer.
-            </p>
-          </Alert>
-        </React.Fragment>
+      }
+      { select1 === 'Red Hat Single Sign-On' &&
+        <Alert
+          variant="info"
+          isInline
+          title="Click to fill the endpoint with your OpenID credentials."
+          className="alert"
+          actionLinks={
+            <AlertActionLink
+              onClick={() => setValueOpenIDConnectIssuer('https://3scale-admin:6ab18253-be8b-42f8-a12a-d4a5758be11a@localhost:8080/auth/realms/singlespa')}
+            >Generate endpoint</AlertActionLink>}
+        />
       }
       <p className="form-title">OpenID Connect Issuer</p>
       <Grid hasGutter>
@@ -232,7 +228,7 @@ export const SecurePage = () => {
       </TextContent>
         <div className="button-group">
           <Link to="/">
-            <Button variant="primary">
+            <Button variant="primary" onClick={() => setIsAuthenticated(true)}>
               Save
             </Button>
           </Link>
