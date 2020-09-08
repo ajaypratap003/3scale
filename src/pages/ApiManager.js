@@ -1,46 +1,26 @@
 import React, {useState} from "react";
 import {
   Button,
-  Card,
-  CardTitle,
-  CardBody,
-  CardFooter,
   ClipboardCopy,
-  ClipboardCopyVariant,
   Divider,
   DataList,
   DataListItem,
   DataListItemRow,
   DataListCell,
-  DataListCheck,
   DataListAction,
   DataListToggle,
   DataListContent,
   DataListItemCells,
-  Dropdown,
-  DropdownSeparator,
-  DropdownPosition,
-  DropdownToggle,
-  Gallery,
   Label,
   Level,
   LevelItem,
-  SelectOption,
-  SelectVariant,
   Title,
-  Text,
   TextContent,
   TextList,
   TextListItem,
   TextListVariants,
   TextListItemVariants,
   TitleSizes,
-  ToolbarItem,
-  ToolbarFilter,
-  KebabToggle,
-  OverflowMenu,
-  OverflowMenuDropdownItem,
-  OverflowMenuControl,
   PageSection,
   PageSectionVariants 
 } from '@patternfly/react-core';
@@ -49,10 +29,13 @@ import LockIcon from '@patternfly/react-icons/dist/js/icons/lock-icon';
 import ExternalLinkSquareAltIcon from '@patternfly/react-icons/dist/js/icons/external-link-square-alt-icon';
 import { Link } from 'react-router-dom';
 
-export const ApiManagerPage = ({ setApiName, isAuthenticated }) => {
+export const ApiManagerPage = ({ location }) => {
 
   const [isExpanded1, setIsExpanded1] = useState(false);
   const [isExpanded2, setIsExpanded2] = useState(false);
+  const { data } = location;
+  const isAuthenticated = data ? data.isAuthenticated : false;
+  console.log('isAuthenticated', isAuthenticated, location);
 
   return (
   <React.Fragment>
@@ -226,8 +209,8 @@ export const ApiManagerPage = ({ setApiName, isAuthenticated }) => {
                       </Label>
                     )
                     : (
-                      <Link to="/produce/secure">
-                        <Button isInline variant="link" icon={<ArrowRightIcon />} iconPosition="right" onClick={() => setApiName('PetStore API')}>
+                      <Link to={{ pathname: "/produce/secure", data: { apiName: "PetStore API" } }}>
+                        <Button isInline variant="link" icon={<ArrowRightIcon />} iconPosition="right">
                           Authenticate API
                         </Button>
                       </Link>
