@@ -209,7 +209,7 @@ export const ApiManagerPage = ({ location }) => {
                       </Label>
                     )
                     : (
-                      <Link to={{ pathname: "/produce/secure", data: { apiName: "PetStore API" } }}>
+                      <Link to={{ pathname: "/produce/secure/Pet Store API", data: { apiName: "PetStore API" } }}>
                         <Button isInline variant="link" icon={<ArrowRightIcon />} iconPosition="right">
                           Authenticate API
                         </Button>
