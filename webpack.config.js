@@ -8,7 +8,7 @@ delete dependencies.serve; // Needed for nodeshift bug
 // Don't include PatternFly styles twice
 const reactCSSRegex = /(react-[\w-]+\/dist|react-styles\/css)\/.*\.css$/;
 
-module.exports = (env = { ssoPort: 3001, navPort: 3003 }, argv) => {
+module.exports = (env = { ssoPort: 8080, navPort: 8080 }, argv) => {
   const isProd = argv.mode === 'production';
   const { remoteSuffix } = env;
   const publicPath = (isProd && remoteSuffix)

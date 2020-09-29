@@ -31,7 +31,7 @@ deploy() {
   dd-oc label ksvc/${KSVC_NAME} app.kubernetes.io/part-of=${APP_NAME} --overwrite=true
   dd-oc annotate --overwrite ksvc/${KSVC_NAME} app.openshift.io/connects-to=threescale-api
 
-  kn service update ${KSVC_NAME} --min-scale 1
+  kn service update ${KSVC_NAME} --min-scale 0
 
   local _latest_rev=$(oc --namespace ${NAMESPACE} get ksvc/${KSVC_NAME} -o=jsonpath='{.status.latestCreatedRevisionName}')
   dd-oc label rev/${_latest_rev} app.openshift.io/runtime=nodejs --overwrite=true
