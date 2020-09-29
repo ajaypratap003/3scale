@@ -12,12 +12,7 @@ usage() {
 }
 
 APP_NAME=${APP_NAME:-3scale}
-
-NAMESPACE=${NAMESPACE}
-if [ -z "${NAMESPACE}" ]; then
-  log-err "You have to set NAMESPACE environment variable"
-  exit 1
-fi
+NAMESPACE=${NAMESPACE:-mfe-poc}
 
 KSVC_NAME=$2
 if [ -z "${KSVC_NAME}" ]; then
